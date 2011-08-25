@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;
+      charset=ISO-8859-1">
+    <title>CS 424 Project 1</title>
+  </head>
+  <body style=" color: white; background-color: black;" alink="#ff2200"
+    link="yellow" vlink="#00aaff">
+    <h1 style="font-family: Helvetica,Arial,sans-serif; color: rgb(255,
+      255, 255);">Project 1 (Rough Draft)<br>
+    </h1>
+    <p style="font-family: Helvetica,Arial,sans-serif; color: rgb(255,
+      255, 255);"><span style="font-weight: bold;">Heat of the Moment</span><br>
+    </p>
+    <p style="font-family: Helvetica,Arial,sans-serif; color: rgb(255,
+      255, 255);">Project due at 9 pm 9/19/11 Chicago time<br>
+    </p>
+    <hr style="width: 100%; height: 2px; font-family:
+      Helvetica,Arial,sans-serif; color: rgb(255, 255, 255);"><span
+      style="font-family: Helvetica,Arial,sans-serif; color: rgb(255,
+      255, 255);"><br>
+    </span>
+    <div style="text-align: justify; font-family:
+      Helvetica,Arial,sans-serif; color: rgb(255, 255, 255);">Project 1
+      will be an individual project to give people practice with writing
+      an application in processing and get everyone ready to contribute
+      to the group projects to come. In this project everyone will learn
+      how to get data into processing, how to write an interactive
+      processing application, and how to create an effective user
+      interface for viewing and analyzing this data. This will give
+      everyone a common basis for communication In the later group
+      projects where people will specialize in different tasks.<br>
+      <br>
+      The project will take a look at termperature data collected from
+      various rooms in evl over the last six years. You job is to create
+      an interactive visualization and analysis tool to help the user
+      better understand what affects the temperature in evl. This tool
+      will allow the user to decide things such as: how warm to dress
+      for a given day and room, where to place new equipment so rooms
+      and the equipment don't get too hot, how to change the settings
+      for the university heating and cooling, etc.<br>
+      <div style="text-align: justify;"><br>
+      </div>
+      <hr style="width: 100%; height: 2px; margin-left: 0px;
+        margin-right: 0px;">
+      <div style="text-align: justify;"><br>
+        For the last six years we have used a one-wire system to monitor
+        temperatures in the lab. Every minute new temperature data is
+        collected and displayed. Each hour the current temperatures are
+        saved to a text file. At this point the data comes to 15 MB.<br
+          style="color: rgb(255, 255, 255);">
+        <br style="color: rgb(255, 255, 255);">
+        <span style="color: rgb(255, 255, 255);"> The data is available
+          at www.evl.uic.edu/aej/424/11p1data/history.txt.zip</span><br>
+        <br>
+        In this case the data is already pre-processed to be an
+        appropriate size and in an easily readable form. That won't hold
+        true for the later assignments. <br>
+        <br>
+        Each line of the file looks like: May/04/2008 10:00 PM
+        FF00080057FB1810&nbsp; 67<br>
+        <br>
+        The first element is the date, the second is the hour and
+        minute, the third is AM or PM, the fourth is the sensor ID, and
+        the fifth is the temperature in degrees Fahrenheit.<br>
+        <br>
+        The temperature sensorIDs can be correlated to rooms<br>
+        <ul>
+          <li style="font-family: Courier New,Courier,monospace;">3B00080058124B10
+            - meeting room&nbsp;&nbsp;&nbsp; - 1<br>
+          </li>
+          <li style="font-family: Courier New,Courier,monospace;">73000800B1D9BD10
+            - main lab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - 2<br>
+          </li>
+          <li style="font-family: Courier New,Courier,monospace;">DB000800B1E8E710
+            - machine room&nbsp;&nbsp;&nbsp; - 3<br>
+          </li>
+          <li style="font-family: Courier New,Courier,monospace;">F2000800B1D88510
+            -
+            lounge&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            - 4<br>
+          </li>
+          <li style="font-family: Courier New,Courier,monospace;">35000800B1EC2510
+            - prototype space - 5<br>
+          </li>
+          <li style="font-family: Courier New,Courier,monospace;">DB00080041634E10
+            - classroom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - 6<br>
+          </li>
+          <li><span style="font-family: Courier New,Courier,monospace;">FF00080057FB1810
+              - office space&nbsp;&nbsp;&nbsp; - 7</span><br>
+          </li>
+        </ul>
+        <br>
+        Here is a small map showing where the various rooms are
+        geographically. While this project will primarily rely on graphs
+        to show the data, you will very likely need to show some kind of
+        simplified map as an informational graphic to tell the user
+        which room is which. <br>
+        <img style=" width: 805px; height: 452px;"
+          src="11p1data/room_layout_annotated.jpg" alt="room layout for
+          temperature sensors"><br>
+        <br>
+        There is a non-annotated version of the map at <span
+          style="color: rgb(255, 255, 255);">www.evl.uic.edu/aej/424/11p1data/evl_2nd_floor.jpg</span>
+        that you might help.<br>
+        <br>
+        in general the data is collected on each hour (eg 10:00) but if
+        the program was offline at that time it might be at a different
+        minute. There may also be holes in the data due to power
+        failures or program crashes.<br>
+        <br>
+        While the data files contain a few more days, for this project
+        we will focus on the days from aug 1 2005 through jul 31 2011<br>
+        <br>
+        You should start by looking at data itself and do some simple
+        plots and statistics in your favourite spreadsheet / plotting
+        program.&nbsp; This will give you an idea of the range of the
+        data and what data is missing. If you haven't used shell scripts
+        before to parse data then you should become acquainted with
+        them. grrep, awk, sed and their friends will save you a lot of
+        time. <br>
+        <br>
+        What kinds of patterns are visible? Your job is to help the user
+        look beyond the cyclical patterns for longer term trends and
+        aberrations that are hiding there, and see what changes in the
+        real world could have caused them. Some of these changes are
+        related to how hot a summer was or how cold a winter was, others
+        are related to human behavior - when are people coming in to the
+        lab and turning on machines? when does the university turn on
+        the heating or the air conditioning?<br>
+        <br>
+        The goal here is to create an interactive visualization tool to
+        aid in your analysis and to back up any conclusions you draw. <br>
+        <br>
+        You will very likely need to relate this data to other data
+        sources such as the schedule of classes, outdoor Chicago
+        temperatures, calendars.<span style="color: rgb(255, 255, 0);"></span><br>
+      </div>
+      <br>
+      <hr style="width: 100%; height: 2px;"><br>
+      Your visualization and analysis tool should be written in
+      processing. As this is primarily a graph-based visualization the
+      Milk / Tea / Coffee example should give you a nice head start on
+      this. As graphs are a very common visualization this will give you
+      a chance to write a set of graphing code that you can reuse and
+      improve in future assignments.<br>
+      <br>
+      You should start by getting processing installed and doing some
+      initial tests to load in the data and start displaying it. You
+      should then start to draw some sketches of what the interface
+      might look like and how you want to arrange and display the data.
+      You can use other software to generate statistics about the data
+      if you find that useful but be sure to document that process. Be
+      careful of missing data when you generate statistics. <br>
+      <br>
+      In past terms the students have shown a desire to show all of the
+      data to the user right away. You should be careful not to
+      overwhelm the user. As Schneiderman said "overview first, zoom and
+      filter, details on demand." Appropriate levels of aggregating data
+      will be very important here.<br>
+      <br>
+      It is also important to note that 'getting it to work' is just a
+      prerequisite to using the application to find answers to your
+      questions. It is that usage that will give you ideas on how to
+      improve your app to make it easier and more intuitive to find
+      those things.<br>
+      <br>
+      <hr style="width: 100%; height: 2px;"><br style="color: rgb(255,
+        255, 255);">
+      <span style="color: rgb(255, 255, 255);">The application you
+        create should help the user perform the following tasks:</span><br
+        style="color: rgb(255, 255, 255);">
+      <br style="color: rgb(255, 255, 255);">
+      <span style="color: rgb(255, 255, 255);">Task #1 - document the
+        repeating seasonal patterns</span><br style="color: rgb(255,
+        255, 255);">
+      <br style="color: rgb(255, 255, 255);">
+      <span style="color: rgb(255, 255, 255);">Task #2 - given the
+        results from task #1, document the long term trends and short
+        term variations in those patterns </span><br style="color:
+        rgb(255, 255, 255);">
+      <br style="color: rgb(255, 255, 255);">
+      <span style="color: rgb(255, 255, 255);">Task #3 - given the
+        results from task #2, what are the events that have the largest
+        affect the data. <span style="color: rgb(255, 255, 0);"></span></span>What
+
+      are the dates where the pattern changes.<br style="color: rgb(255,
+        255, 255);">
+      <br style="color: rgb(255, 255, 255);">
+      <span style="color: rgb(255, 255, 255);">Task #4 - Predict the
+        average room temperature in each EVL room for October 2011 and
+        November 2011. At the end of the course we will see who was the
+        best predictor. Note that taking an average of all the previous
+        data will likely make a very poor prediction. There are trends
+        in the data that you should take into account when making your
+        predictions. The results should be given in this format on your
+        web page: <span style="color: rgb(255, 255, 0);"></span></span><br>
+      <br>
+      <ul>
+        <li>3B00080058124B10, average 10/11 in F, average 10/12 in F<br>
+        </li>
+        <li>73000800B1D9BD10, average 10/11 in F, average 10/12 in F</li>
+        <li>DB000800B1E8E710, average 10/11 in F, average 10/12 in F</li>
+        <li>F2000800B1D88510, average 10/11 in F, average 10/12 in F</li>
+        <li>35000800B1EC2510, average 10/11 in F, average 10/12 in F</li>
+        <li>DB00080041634E10, average 10/11 in F, average 10/12 in F</li>
+        <li>FF00080057FB1810, average 10/11 in F, average 10/12 in F</li>
+      </ul>
+      <br>
+      <br>
+    </div>
+    <span style="font-family: Helvetica,Arial,sans-serif; color:
+      rgb(255, 255, 255);"> </span>
+    <hr style="width: 100%; height: 2px; font-family:
+      Helvetica,Arial,sans-serif; color: rgb(255, 255, 255);"><span
+      style="font-family: Helvetica,Arial,sans-serif; color: rgb(255,
+      255, 255);"></span><br style="font-family:
+      Helvetica,Arial,sans-serif; color: rgb(255, 255, 255);">
+    <div style="text-align: justify; font-family:
+      Helvetica,Arial,sans-serif; color: rgb(255, 255, 255);"><br>
+      <span style="font-weight: bold; text-decoration: underline;">For a
+        C you need ...</span><br>
+      <br>
+      <ul>
+        <li>pick one year of the data to visualize for all of the rooms</li>
+        <li>static well labelled graph or set of graphs which can be
+          easily compared<br>
+        </li>
+        <li>ability for the user to show different rooms on same time
+          line together or individually with appropriate colours<br>
+        </li>
+        <li>give general tabular statistics about temperature</li>
+        <li>show the data in F or C</li>
+        <li>reference map to easily relate the graphical data to the
+          room layout<br>
+        </li>
+        <li>you should check your visualization with a colour blindness
+          tool to make sure that its ok</li>
+        <li>the graph should update quickly when the user interacts</li>
+      </ul>
+      <br style="font-weight: bold;">
+      <span style="font-weight: bold; text-decoration: underline;">For a
+        B you need to add ...</span><br>
+      <br>
+      <ul>
+        <li>use all years of the data to visualize for all of the rooms<br>
+        </li>
+        <li>see outdoor temperature data superimposed on the indoor
+          temperature data<br>
+        </li>
+        <li>display aggregate data (yearly / monthly / weekly / daily /
+          hourly)</li>
+        <li>compare the most recent month of data to the overall data,
+          and to that same month in previous years<br>
+        </li>
+      </ul>
+      <br>
+      <span style="font-weight: bold; text-decoration: underline;">For
+        an A you need to add ...</span><br>
+      <br>
+      <ul>
+        <li>interpolate changes in the graphs for smooth transitions
+          between changes in the view</li>
+        <li>dynamically zoom in on part of the timeline to see it in
+          more detail</li>
+        <li>compare a given month to that same month in other years<br>
+        </li>
+        <li>find some interesting things in the data and highlight them
+          on your webpage through screen snapshots</li>
+      </ul>
+    </div>
+    <span style="font-family: Helvetica,Arial,sans-serif; color:
+      rgb(255, 255, 255);"> </span>
+    <hr style="width: 100%; height: 2px; font-family:
+      Helvetica,Arial,sans-serif; color: rgb(255, 255, 255);"><br
+      style="font-family: Helvetica,Arial,sans-serif;">
+    <span style="font-family: Helvetica,Arial,sans-serif;">You should
+      create a set of web pages that describe your work on the project.
+      This should include:<br>
+    </span>
+    <ul style="font-family: Helvetica,Arial,sans-serif;">
+      <li>1 page containing an embedded processing window (max size 1024
+        x 768) and a link to a gzipped file containing the
+        well-commented source code and all other necessary files to make
+        it run locally. In future assignments where the data files may
+        be too big to run from a browser or additional components may be
+        necessary this page will include instructions on how to install
+        your app starting from "I have a web browser on my computer."
+        You should provide links and clear instructions on everything
+        needed to get your application running. <br>
+      </li>
+      <li>1 page on the data you used including where you got it, what
+        you did to it.<br>
+      </li>
+      <li>1 page on how to use your application and the things you can
+        do with it.</li>
+      <li>1 page on what interesting things you found using your
+        application.</li>
+    </ul>
+    <span style="font-family: Helvetica,Arial,sans-serif;">all of which
+      should have plenty of screenshots with meaningful captions. </span><span
+      style="font-family: Helvetica,Arial,sans-serif;">Web pages like
+      this can be very helpful later on in helping you build up a
+      portfolio of your work when you start looking for a job so please
+      put some effort into it.</span><br>
+    <span style="font-family: Helvetica,Arial,sans-serif;"><br>
+      You should also create a 2-3 minute youtube video showing the use
+      of your application including narration with decent audio quality.
+      That video should be in a very obvious place on your main project
+      web page. The easiest way to do this is to use a screen-capture
+      tool while interacting with the application, though you will most
+      likely find its useful to do some editing afterwards to tighten
+      the video up. Its also a good idea to have a video like this
+      available as a backup during your presentation just in case of
+      gremlins.</span><br>
+    <span style="font-family: Helvetica,Arial,sans-serif;"><br>
+      I will be linking your web page to the course notes so please send
+      me a nice 1024 x 768 jpg image of your visualization for the web.
+      This should be named
+      p1.&lt;your_last_name&gt;.&lt;your_first_name&gt;.jpg.&nbsp; </span><br
+      style="font-family: Helvetica,Arial,sans-serif;">
+    <br style="font-family: Helvetica,Arial,sans-serif;">
+    <span style="font-family: Helvetica,Arial,sans-serif;">Each student
+      will bring his / her visualization to class to present it and
+      describe its features to the rest of the class. This allows
+      everyone to see a variety of solutions to the problem, and a
+      variety of implementations.</span><br style="font-family:
+      Helvetica,Arial,sans-serif;">
+    <span style="font-family: Helvetica,Arial,sans-serif; color:
+      rgb(255, 255, 255);"><br>
+    </span>
+    <hr style="width: 100%; height: 2px; font-family:
+      Helvetica,Arial,sans-serif; color: rgb(255, 255, 255);"><span
+      style="font-family: Helvetica,Arial,sans-serif; color: rgb(255,
+      255, 255);"></span>
+    <hr style="font-family: Helvetica,Arial,sans-serif; color: rgb(255,
+      255, 255);"><span style="font-family: Helvetica,Arial,sans-serif;
+      color: rgb(255, 255, 255);">last revision 8/23/11</span>
+  </body>
+</html>
