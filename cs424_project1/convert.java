@@ -18,7 +18,7 @@ public class convert {
 	  * @throws IOException 
 	  */
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 
 //example string May/04/2008 10:00 PM FF00080057FB1810  67
     	//Arg 0 input filename, arg 1 output filename, arg 2 creator, arg 3 timeformat, arg 4 seperator arg[s] 5 ... description,
@@ -41,13 +41,10 @@ public class convert {
     	
     	//Calendar object to get the current time.
          Calendar calendar = Calendar.getInstance();
-         for (int i = 5; i < args.length; ++i) {
-			description += args[i];
-		}
       
          //Creation of the graph object
        
-     	try {
+     	
     		
 			//Use the first argument as the input to file reader
 			FileReader input = new FileReader("history.txt"); 
@@ -65,6 +62,6 @@ public class convert {
 		        
 		        
 		        }
-		}
+		
 	}
 }

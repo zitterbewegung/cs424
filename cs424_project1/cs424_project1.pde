@@ -46,7 +46,8 @@ figure 01 just points.
 If you close a shape you can specifiy a color.
 */
 import controlP5.*;
-Convert converter;
+ControlP5 controlP5;
+convert converter;
 
 
 void setup(){
@@ -59,8 +60,5 @@ void draw(){
   //You have a mouse pressed function keypressed function etc...
   
 }
-void mouseDragged(){
-  x = mouseX; //Variables which have mouse x and y
-  y = mouseY; 
-}
+
 
