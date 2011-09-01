@@ -30,10 +30,10 @@ task 3 given the results from task 2 what are the events that have the largest a
 task 4 predict the average room temperature in each evl room for october 2011 and November 2011
 Main type of colorblindness. To avoid this don't use green
 
-autocomplete menu
-mousewheel to zoom in
-scroll to scroll through timeline
-absolute vs relative values
+* TODO autocomplete menu
+* TODO mousewheel to zoom in
+* TODO scroll to scroll through timeline
+* TODO absolute vs relative values
 genre that someone worked in
 
 default color scheme is horrific.
@@ -43,12 +43,13 @@ the trick is using it well
 * TODO SET OF WEBSITES
 * TODO PICTURE OF visualization
 * TODO Turn in project
-This is going to run in the browser for now.
-figure 01 just points.
-If you close a shape you can specifiy a color.
-Draw the application before you try to do it.
-Making it easy for people to run your app is appreciated.
-DRY do not repeat yourself.
+* This is going to run in the browser for now.
+** figure 01 just points.
+** If you close a shape you can specifiy a color.
+* Draw the application before you try to do it.
+* Making it easy for people to run your app is appreciated.
+* DRY do not repeat yourself.
+* See the same data in multiple ways. Multiple views keep each
 */
 import controlP5.*;
 ControlP5 controlP5;
