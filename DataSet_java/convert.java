@@ -1,4 +1,4 @@
-
+import processing.core.PApplet;
 
 //Released under the Apache licence
 import java.text.ParseException;
@@ -11,16 +11,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import processing.core.PApplet;
 
 
-public class convert {
+public class Convert {
 
 	 /**
 	  * @param args the command line arguments
 	  * @throws IOException 
 	  */
-	 PApplet parent;
+	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
 //example string May/04/2008 10:00 PM FF00080057FB1810  67
@@ -53,8 +52,7 @@ public class convert {
 			FileReader input = new FileReader("history.txt"); 
 			//Create a buffered reader and allow for read in the file
 			BufferedReader buffer = new BufferedReader(input); 
-			//parent.readings;
-                        // parent.DataSet;
+			TempReading readings = new TempReading();
 			String line;
 			//This reads in a file line by line and puts it into a large string
 			while((line = buffer.readLine()) != null){

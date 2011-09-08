@@ -57,7 +57,7 @@ For basic tables and graphic code you should look at what other people do and th
 import controlP5.*;
 
 ControlP5 controlP5;
-convert converter;
+Convert converter;
 
 
 void setup(){
