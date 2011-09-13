@@ -1,3 +1,16 @@
+import org.gwoptics.graphics.colourmap.*;
+import org.gwoptics.graphics.graph2D.backgrounds.*;
+import org.gwoptics.graphics.graph2D.traces.*;
+import org.gwoptics.graphics.camera.*;
+import org.gwoptics.graphics.graph2D.effects.*;
+import org.gwoptics.graphics.graph2D.*;
+import org.gwoptics.*;
+import org.gwoptics.gaussbeams.*;
+import org.gwoptics.graphicsutils.*;
+import org.gwoptics.mathutils.*;
+import org.gwoptics.graphics.*;
+import org.gwoptics.graphics.colourmap.presets.*;
+
 import timeline.*;
 
 /*
@@ -72,7 +85,7 @@ import controlP5.*;
 
 
 ControlP5 controlP5;
-convert converter;
+convert converter = new convert();
 public DataSet dataSet;
 TempReading tempReading;
 Timeline timeline; 
@@ -80,10 +93,11 @@ Timeline timeline;
 
 void setup(){
   size(1024,768);
-  timeline = new Timeline(this);
+  //timeline = new Timeline(this);
   frameRate(30);
-  controlP5 = new ControlP5(this);
-  println(converter.getData().toString());
+  //controlP5 = new ControlP5(this);
+  converter.process();
+ println( converter.getData().toString());
   
 }
 void draw(){
