@@ -8,6 +8,6 @@ class TempReading
    id = i;
    ReadingDate = d;
    Temperature = temp;
- } 
+  } 
   
 }

@@ -1,3 +1,5 @@
+import timeline.*;
+
 /*
 * Project 1 due 3 weeks from yesterday.
 This must be an interactive application that shows the data.
@@ -51,24 +53,44 @@ the trick is using it well
 * Making it easy for people to run your app is appreciated.
 * DRY do not repeat yourself.
 * See the same data in multiple ways. Multiple views keep each
-For basic tables and graphic code you should look at what other people do and then adapt them to what you want.
+* Put more information on display
+* TODO design in grayscale and then scale up
+* What colors mean
+* Colors can speed recognition
+** Be mindful of your blindspot and what 			      :NOTES:
+** Some colors don't belong with each other(Bright red bright blue)   :NOTES:
+* Fewer colors is generally better :NOTES:
+* TODO Who, what where for your data and your visualization and what is important. Also giving context. Context for your data is extremely important
+** You can play with data sources too 				      :NOTES:
+
+* For basic tables and graphic code you should look at what other people do and then adapt them to what you want.
+** Overlapping months on top of each other 			      :NOTES:
+
 */
 
 import controlP5.*;
 
+
 ControlP5 controlP5;
 convert converter;
+public DataSet dataSet;
+TempReading tempReading;
+Timeline timeline; 
 
 
 void setup(){
   size(1024,768);
+  timeline = new Timeline(this);
   frameRate(30);
   controlP5 = new ControlP5(this);
+  println(converter.getData().toString());
+  
 }
 void draw(){
   
   //You have a mouse pressed function keypressed function etc...
   
 }
+
 
 

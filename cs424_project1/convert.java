@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import processing.core.PApplet;
 
+import java.util.ArrayList;
+
 
 public class convert {
 
@@ -20,15 +22,21 @@ public class convert {
 	  * @param args the command line arguments
 	  * @throws IOException 
 	  */
-	 PApplet parent;
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public ArrayList<Object> data = new ArrayList<Object>();
+        public ArrayList<Object>  getData(){
+          return data;
+        }
+        public void  setData(ArrayList<Object>  x){
+          data = x;
+        }
+	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
 
-//example string May/04/2008 10:00 PM FF00080057FB1810  67
-    	//Arg 0 input filename, arg 1 output filename, arg 2 creator, arg 3 timeformat, arg 4 seperator arg[s] 5 ... description,
-    	if(args.length  < 5){
-    		System.out.println(" Usage: pair2gexf pairfile output creator timeformat seperator description");
-    		System.exit(0);
-    	}
+          process();
+		
+	}
+      public void process(){
+        
+
      	SimpleDateFormat formatter = new SimpleDateFormat("MMM/dd/yyyy HH:mm aa" );
     	
     	boolean doubleflag = false;
@@ -54,19 +62,25 @@ public class convert {
 			//Create a buffered reader and allow for read in the file
 			BufferedReader buffer = new BufferedReader(input); 
 			//parent.readings;
-                        // parent.DataSet;
+                        	
+                        
 			String line;
 			//This reads in a file line by line and puts it into a large string
 			while((line = buffer.readLine()) != null){
-				 line.replace('	', ' ');
 				 String splitstring [] = line.split(",");
+                                  //example string May/04/2008 10:00 PM FF00080057FB1810  67
+                                 
                                 
-		  
+                                
+                                   this.data.add(formatter.parse(splitstring[0]));
+                                   this.data.add(splitstring[1]);
+                                   this.data.add(splitstring[2]);
+                                 
+		    
 		         //Creates the first node in the pair
 		        
 		        
 		        }
-		
-	}
+      }
 }
 
