@@ -80,14 +80,15 @@ the trick is using it well
 ** Overlapping months on top of each other 			      :NOTES:
 
 */
-
+import java.text.SimpleDateFormat;
 import controlP5.*;
 
 
 ControlP5 controlP5;
 convert converter = new convert();
-public DataSet dataSet;
-TempReading tempReading;
+public DataSet dataSet = new DataSet();
+
+
 Timeline timeline; 
 
 
@@ -97,7 +98,23 @@ void setup(){
   frameRate(30);
   //controlP5 = new ControlP5(this);
   converter.process();
+  TempReading tempReading;
+   String idTemp = "";
+   Date ReadingDateTemp = new Date();
+  SimpleDateFormat formatter = new SimpleDateFormat(
+					"MMM/dd/yyyy HH:mm aa");
+  for(int counter = 0; counter < converter.data.size(); counter++){
+    String[] temp = converter.data.get(counter);
+    try{
+    dataSet.readingsByDate.add( new TempReading( temp[1],formatter.parse(temp[0]), Double.parseDouble(temp[2])));
+    }
+    catch (Exception e) {
+			e.printStackTrace();
+		}
+         
+  }
  println( converter.getData().toString());
+ println(dataSet.readingsByDate.size());
   
 }
 void draw(){

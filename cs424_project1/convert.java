@@ -21,13 +21,13 @@ public class convert {
 	 *            the command line arguments
 	 * @throws IOException
 	 */
-	public ArrayList<Object> data = new ArrayList<Object>();
+	public ArrayList<String[]> data = new ArrayList<String[]>();
 
-	public ArrayList<Object> getData() {
+	public ArrayList<String[]> getData() {
 		return data;
 	}
 
-	public void setData(ArrayList<Object> x) {
+	public void setData(ArrayList<String[]> x) {
 		data = x;
 	}
 
@@ -41,8 +41,7 @@ public class convert {
 	public void process() {
 		try {
 
-			SimpleDateFormat formatter = new SimpleDateFormat(
-					"MMM/dd/yyyy HH:mm aa");
+			
 
 			// Use the first argument as the input to file reader
 			FileReader input = new FileReader("/Users/zitterbewegung/Documents/cs424/cs424_project1/data/history.csv");
@@ -55,10 +54,10 @@ public class convert {
 			while ((line = buffer.readLine()) != null) {
 				String splitstring[] = line.split(",");
 				// example string May/04/2008 10:00 PM FF00080057FB1810 67
-
-				data.add(formatter.parse(splitstring[0]));
-				data.add(splitstring[1]);
-				data.add(splitstring[2]);
+                                data.add(splitstring);
+//				data.add(formatter.parse(splitstring[0]));
+//				data.add(splitstring[1]);
+//				data.add(splitstring[2]);
 
 				// Creates the first node in the pair
 
@@ -67,8 +66,6 @@ public class convert {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 }
