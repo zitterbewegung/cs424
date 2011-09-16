@@ -1,17 +1,3 @@
-import org.gwoptics.graphics.colourmap.*;
-import org.gwoptics.graphics.graph2D.backgrounds.*;
-import org.gwoptics.graphics.graph2D.traces.*;
-import org.gwoptics.graphics.camera.*;
-import org.gwoptics.graphics.graph2D.effects.*;
-import org.gwoptics.graphics.graph2D.*;
-import org.gwoptics.*;
-import org.gwoptics.gaussbeams.*;
-import org.gwoptics.graphicsutils.*;
-import org.gwoptics.mathutils.*;
-import org.gwoptics.graphics.*;
-import org.gwoptics.graphics.colourmap.presets.*;
-
-import timeline.*;
 
 /*
 * Project 1 due 3 weeks from yesterday.
@@ -78,25 +64,76 @@ the trick is using it well
 
 * For basic tables and graphic code you should look at what other people do and then adapt them to what you want.
 ** Overlapping months on top of each other 			      :NOTES:
-
+*Sheets
+**Blue sheet I can't hear you
+**Green Sheet 1 minute left in presentation
+**Red sheet hit 4 minutes (Stop presentation immediately)
+*Spend time showing your app :PRESENTATION:
+*Put website on multiple places (thumbdrive) :PRESENTATION:
 */
+import com.nootropic.processing.layers.*;
+
 import java.text.SimpleDateFormat;
 import controlP5.*;
 
+//Begin code from step_17_interpolate
+FloatTable data;
+float dataMin, dataMax;
+
+float plotX1, plotY1;
+float plotX2, plotY2;
+float labelX, labelY;
+
+int rowCount;
+int columnCount;
+int currentColumn = 0;
+
+int yearMin, yearMax;
+int[] years;
+
+int yearInterval = 10;
+int volumeInterval = 10;
+int volumeIntervalMinor = 5;
+
+float[] tabLeft, tabRight;
+float tabTop, tabBottom;
+float tabPad = 10;
+
+Integrator[] interpolators;
+
+PFont plotFont;
 
 ControlP5 controlP5;
 convert converter = new convert();
 public DataSet dataSet = new DataSet();
 
 
-Timeline timeline; 
 
+int myColorBackground = color(0,0,0);
 
+RadioButton r;
+PImage b;
+AppletLayers layers;
 void setup(){
   size(1024,768);
   //timeline = new Timeline(this);
   frameRate(30);
-  //controlP5 = new ControlP5(this);
+  //From control p5 examples
+  noStroke();
+  
+  // Images must be in the "data" directory to load correctly
+
+  controlP5 = new ControlP5(this);
+  layers = new AppletLayers(this);
+   r = controlP5.addRadioButton("radioButton",20,300);
+  r.setColorForeground(color(120));
+  r.setColorActive(color(255));
+  r.setColorLabel(color(255));
+  r.setItemsPerRow(5);
+  r.setSpacingColumn(50);
+   addToRadioButton(r,"F",1);
+  addToRadioButton(r,"C",2);
+  
   converter.process();
   TempReading tempReading;
    String idTemp = "";
@@ -115,13 +152,238 @@ void setup(){
   }
  println( converter.getData().toString());
  println(dataSet.readingsByDate.size());
+ //Begin 
+  data = new FloatTable("milk-tea-coffee.tsv");
   
+  String [] rows = new String[8];
+  
+  data = new FloatTable(rows,split(converter.columns, ","));
+ for (int i = dataSet.readingsByDate.size()-1; i >= 0; i--) {
+    float tempFloat[] = new float[8];
+    
+    TempReading element = (TempReading) dataSet.readingsByDate.get(i);
+    int id = Integer.decode(element.id);
+    tempFloat[id] = new Float(element.Temperature);
+   data.addRow(element.id, tempFloat); 
+  }
+  rowCount = data.getRowCount();
+  columnCount = data.getColumnCount();
+  
+  years = int(data.getRowNames());
+  yearMin = years[0];
+  yearMax = years[years.length - 1];
+  
+  dataMin = 0;
+  dataMax = ceil(data.getTableMax() / volumeInterval) * volumeInterval;
+
+  interpolators = new Integrator[rowCount];
+  for (int row = 0; row < rowCount; row++) {
+    float initialValue = data.getFloat(row, 0);
+    interpolators[row] = new Integrator(initialValue);
+    interpolators[row].attraction = 0.1;  // Set lower than the default
+  }
+
+  plotX1 = 60; 
+  plotX2 = (width - 80)  ;
+  labelX = 25;
+  plotY1 = 30;
+  plotY2 = (height - 70)  ;
+  labelY = (height - 25)  ;
+  
+  plotFont = createFont("SansSerif", 20);
+  textFont(plotFont);
+
+  smooth();
+  b = loadImage("evl_2nd_floor.jpg");
+  image(b, 0, 0, width/4, height/4);
+  fill(255,0,0,127);
+  rect(30,100,200,40);
+  rect(30,50,200,40);
+ 
 }
+void paint(java.awt.Graphics g) {
+  if (layers != null) {
+    layers.paint(this);
+  } 
+  else {
+    super.paint(g);
+  }
+}
+void addToRadioButton(RadioButton theRadioButton, String theName, int theValue ) {
+  //From Control p5 examples
+  Toggle t = theRadioButton.addItem(theName,theValue);
+  t.captionLabel().setColorBackground(color(80));
+  t.captionLabel().style().movePadding(2,0,-1,2);
+  t.captionLabel().style().moveMargin(-2,0,0,-3);
+  t.captionLabel().style().backgroundWidth = 46;
+}
+
+
 void draw(){
   
   //You have a mouse pressed function keypressed function etc...
+    background(224);
   
+  // Show the plot area as a white box  
+  fill(255);
+  rectMode(CORNERS);
+  noStroke();
+  rect(plotX1, plotY1, plotX2, plotY2);
+
+  drawTitleTabs();
+  drawAxisLabels();
+
+   for (int row = 0; row < rowCount; row++) {
+    interpolators[row].update();
+  }
+
+  drawYearLabels();
+  drawVolumeLabels();
+
+  noStroke();
+  fill(#5679C1);
+  drawDataArea(currentColumn);
 }
+
+
+void drawTitleTabs() {
+  rectMode(CORNERS);
+  noStroke();
+  textSize(20);
+  textAlign(LEFT);
+
+  // On first use of this method, allocate space for an array
+  // to store the values for the left and right edges of the tabs
+  if (tabLeft == null) {
+    tabLeft = new float[columnCount];
+    tabRight = new float[columnCount];
+  }
+  
+  float runningX = plotX1; 
+  tabTop = plotY1 - textAscent() - 15;
+  tabBottom = plotY1;
+  
+  for (int col = 0; col < columnCount; col++) {
+    String title = data.getColumnName(col);
+    tabLeft[col] = runningX; 
+    float titleWidth = textWidth(title);
+    tabRight[col] = tabLeft[col] + tabPad + titleWidth + tabPad;
+    
+    // If the current tab, set its background white, otherwise use pale gray
+    fill(col == currentColumn ? 255 : 224);
+    rect(tabLeft[col], tabTop, tabRight[col], tabBottom);
+    
+    // If the current tab, use black for the text, otherwise use dark gray
+    fill(col == currentColumn ? 0 : 64);
+    text(title, runningX + tabPad, plotY1 - 10);
+    
+    runningX = tabRight[col];
+  }
+}
+
+
+void mousePressed() {
+  if (mouseY > tabTop && mouseY < tabBottom) {
+    for (int col = 0; col < columnCount; col++) {
+      if (mouseX > tabLeft[col] && mouseX < tabRight[col]) {
+        setCurrent(col);
+      }
+    }
+  }
+}
+
+
+void setCurrent(int col) {
+  currentColumn = col;
+  
+  for (int row = 0; row < rowCount; row++) {
+    interpolators[row].target(data.getFloat(row, col));
+  }
+}
+
+
+void drawAxisLabels() {
+  fill(0);
+  textSize(13);
+  textLeading(15);
+  
+  textAlign(CENTER, CENTER);
+  text("Gallons\nconsumed\nper capita", labelX, (plotY1+plotY2)/2);
+  textAlign(CENTER);
+  text("Year", (plotX1+plotX2)/2, labelY);
+}
+
+
+void drawYearLabels() {
+  fill(0);
+  textSize(10);
+  textAlign(CENTER);
+  
+  // Use thin, gray lines to draw the grid
+  stroke(224);
+  strokeWeight(1);
+  
+  for (int row = 0; row < rowCount; row++) {
+    if (years[row] % yearInterval == 0) {
+      float x = map(years[row], yearMin, yearMax, plotX1, plotX2);
+      text(years[row], x, plotY2 + textAscent() + 10);
+      line(x, plotY1, x, plotY2);
+    }
+  }
+}
+
+
+void drawVolumeLabels() {
+  fill(0);
+  textSize(10);
+  textAlign(RIGHT);
+  
+  stroke(128);
+  strokeWeight(1);
+
+  for (float v = dataMin; v <= dataMax; v += volumeIntervalMinor) {
+    if (v % volumeIntervalMinor == 0) {     // If a tick mark
+      float y = map(v, dataMin, dataMax, plotY2, plotY1);  
+      if (v % volumeInterval == 0) {        // If a major tick mark
+        float textOffset = textAscent()/2;  // Center vertically
+        if (v == dataMin) {
+          textOffset = 0;                   // Align by the bottom
+        } else if (v == dataMax) {
+          textOffset = textAscent();        // Align by the top
+        }
+        text(floor(v), plotX1 - 10, y + textOffset);
+        line(plotX1 - 4, y, plotX1, y);     // Draw major tick
+      } else {
+        //line(plotX1 - 2, y, plotX1, y);   // Draw minor tick
+      }
+    }
+  }
+}
+
+
+void drawDataArea(int col) {
+  beginShape();
+  for (int row = 0; row < rowCount; row++) {
+    if (data.isValid(row, col)) {
+      float value = interpolators[row].value;
+      float x = map(years[row], yearMin, yearMax, plotX1, plotX2);
+      float y = map(value, dataMin, dataMax, plotY2, plotY1);
+      vertex(x, y);
+    }
+  }
+  vertex(plotX2, plotY2);
+  vertex(plotX1, plotY2);
+  endShape(CLOSE);
+}
+void controlEvent(ControlEvent theEvent) {
+  print("got an event from "+theEvent.group().name()+"\t");
+  for(int i=0;i<theEvent.group().arrayValue().length;i++) {
+    print(int(theEvent.group().arrayValue()[i]));
+  }
+  println("\t "+theEvent.group().value());
+  myColorBackground = color(int(theEvent.group().value()*50),0,0);
+}
+
 
 
 
