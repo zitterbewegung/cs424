@@ -239,13 +239,7 @@ void draw(){
   noStroke();
   fill(#5679C1);
   drawDataArea(currentColumn);
-   ListIterator li = layers.getListIterator();
-  while (li.hasNext()) {
-    RoomLayer ao = (RoomLayer)li.next();
-    if (ao.age > 100) {
-      li.remove();
-    }
-  }
+  layers.addLayer(new RoomLayer(this,0,0));
 }
 
 

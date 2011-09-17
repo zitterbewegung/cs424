@@ -1,6 +1,8 @@
 class RoomLayer extends Layer {
     int x, y, size, age, c;
-   RoomLayer(PApplet parent){
+    int alpha = 255;
+    int hue = 255;
+   RoomLayer(PApplet parent, int x, int y){
       super(parent);
     }
    void setup() {
