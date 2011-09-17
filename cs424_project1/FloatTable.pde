@@ -15,12 +15,12 @@ class FloatTable {
   String[] columnNames;
   void addRow(String rowName, float[] data1){
      //      copy data into the table starting at pieces[1]
-    rowCount++;
-    data = (float[][]) subset(data, 0, rowCount);
+//    rowCount++;
+ //   data = (float[][]) subset(data, 0, rowCount);
     
-     rowNames = (String[]) append(rowNames, rowName); 
-      
-     data = (float[][]) append(data,data1); 
+//     rowNames = (String[]) append(rowNames, rowName); 
+//      
+//     data = (float[][]) append(data,data1); 
 
      
     

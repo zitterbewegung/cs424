@@ -157,15 +157,15 @@ void setup(){
   
   String [] rows = new String[8];
   
-  data = new FloatTable(rows,split(converter.columns, ","));
- for (int i = dataSet.readingsByDate.size()-1; i >= 0; i--) {
-    float tempFloat[] = new float[8];
-    
-    TempReading element = (TempReading) dataSet.readingsByDate.get(i);
-    int id = Integer.decode(element.id);
-    tempFloat[id] = new Float(element.Temperature);
-   data.addRow(element.id, tempFloat); 
-  }
+ // data = new FloatTable(rows,split(converter.columns, ","));
+// for (int i = dataSet.readingsByDate.size()-1; i >= 0; i--) {
+//    float tempFloat[] = new float[8];
+//    
+//    TempReading element = (TempReading) dataSet.readingsByDate.get(i);
+//    int id = Integer.decode(element.id);
+//    tempFloat[id] = new Float(element.Temperature);
+//   data.addRow(element.id, tempFloat); 
+//  }
   rowCount = data.getRowCount();
   columnCount = data.getColumnCount();
   
@@ -194,11 +194,7 @@ void setup(){
   textFont(plotFont);
 
   smooth();
-  b = loadImage("evl_2nd_floor.jpg");
-  image(b, 0, 0, width/4, height/4);
-  fill(255,0,0,127);
-  rect(30,100,200,40);
-  rect(30,50,200,40);
+ 
  
 }
 void paint(java.awt.Graphics g) {
@@ -243,6 +239,13 @@ void draw(){
   noStroke();
   fill(#5679C1);
   drawDataArea(currentColumn);
+   ListIterator li = layers.getListIterator();
+  while (li.hasNext()) {
+    RoomLayer ao = (RoomLayer)li.next();
+    if (ao.age > 100) {
+      li.remove();
+    }
+  }
 }
 
 
