@@ -155,10 +155,11 @@ void setup() {
   //data = new FloatTable("milk-tea-coffee.tsv");
 
   String [] rows = new String[8];
+  String [] columnNames = {"1","2","3","4","5","6","7"};
 
-
-  data = new FloatTable(rows,  split(converter.columns, ","));
-  for (int i = dataSet.readingsByDate.size()-1; i >= 0; --i) {
+  data = new FloatTable(rows,  columnNames);
+  int limit = 1000;
+  for (int i = limit; i >= 0; --i) {
     float tempFloat[] = new float[8];
     for(int j = 0; j > tempFloat.length-1; ++j){
       tempFloat[j] = 0.0;
@@ -166,7 +167,9 @@ void setup() {
     TempReading element = (TempReading) dataSet.readingsByDate.get(i);
     int id = Integer.decode(element.id);
     tempFloat[id] = new Float(element.Temperature);
-    data.addRow(element.id, tempFloat);
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy hh:mm");
+    data.addRow(//simpleDateFormat.format(element.ReadingDate), 
+    "2002", tempFloat);
   }
   rowCount = data.getRowCount();
   columnCount = data.getColumnCount();
@@ -239,7 +242,7 @@ void draw() {
   noStroke();
   fill(#5679C1);
   drawDataArea(currentColumn);
-  layers.addLayer(new RoomLayer(this, 0, 0));
+  layers.addLayer(new RoomLayer(this, 300, 300));
 }
 
 
@@ -307,7 +310,7 @@ void drawAxisLabels() {
   textAlign(CENTER, CENTER);
   text("Gallons\nconsumed\nper capita", labelX, (plotY1+plotY2)/2);
   textAlign(CENTER);
-  text("Year", (plotX1+plotX2)/2, labelY);
+  text("Date", (plotX1+plotX2)/2, labelY);
 }
 
 

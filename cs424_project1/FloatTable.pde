@@ -20,7 +20,7 @@ class FloatTable {
 //    println(rowName);
 //    println(data1);
 
-     rowNames = (String[]) append(rowNames, rowName); 
+      rowNames = (String[]) append(rowNames, rowName); 
       data = (float[][]) append(data,data1); 
 
      
