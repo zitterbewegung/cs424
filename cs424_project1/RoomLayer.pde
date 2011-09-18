@@ -4,6 +4,8 @@ class RoomLayer extends Layer {
     int hue = 255;
    RoomLayer(PApplet parent, int x, int y){
       super(parent);
+      this.x = x;
+      this.y = y;
     }
    void setup() {
     smooth();

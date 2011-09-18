@@ -15,12 +15,13 @@ class FloatTable {
   String[] columnNames;
   void addRow(String rowName, float[] data1){
      //      copy data into the table starting at pieces[1]
-//    rowCount++;
- //   data = (float[][]) subset(data, 0, rowCount);
-    
-//     rowNames = (String[]) append(rowNames, rowName); 
-//      
-//     data = (float[][]) append(data,data1); 
+    rowCount++;
+  //  data = (float[][]) subset(data, 0, rowCount);
+//    println(rowName);
+//    println(data1);
+
+     rowNames = (String[]) append(rowNames, rowName); 
+      data = (float[][]) append(data,data1); 
 
      
     
@@ -67,11 +68,14 @@ class FloatTable {
 //  }
 //  
   FloatTable(String[] rows, String[] columns){
+
     columnCount = columns.length;
+    scrubQuotes(columns);
     rowNames = new String[rows.length-1];
     rowNames[rowCount] = rows[1];
     data = new float[rows.length-1][];
-    
+    columnNames = columns;
+    println(columnNames);
   }
   FloatTable(String filename) {
     String[] rows = loadStrings(filename);
@@ -178,12 +182,18 @@ class FloatTable {
     if ((rowIndex < 0) || (rowIndex >= data.length)) {
       throw new RuntimeException("There is no row " + rowIndex);
     }
-    if ((col < 0) || (col >= data[rowIndex].length)) {
+    println(data[rowIndex]);
+    if ((col < 0) || data[rowIndex] != null && (col >= data[rowIndex].length)) {
       throw new RuntimeException("Row " + rowIndex + " does not have a column " + col);
     }
     // end training wheels
-    
-    return data[rowIndex][col];
+  if(data[rowIndex] != null){
+       return data[rowIndex][col];
+  }
+  else{
+    return 0.0;
+ 
+  }
   }
   
   
@@ -191,9 +201,16 @@ class FloatTable {
     if (row < 0) return false;
     if (row >= rowCount) return false;
     //if (col >= columnCount) return false;
-    if (col >= data[row].length) return false;
+    if (data[row] != null && col >= data[row].length) return false; //Error
     if (col < 0) return false;
-    return !Float.isNaN(data[row][col]);
+    if(data != null){
+         return false;
+    }
+    else{
+  
+       return !Float.isNaN(data[row][col]);
+    }
+    
   }
 
 
