@@ -21,6 +21,7 @@ class FloatTable {
 //    println(data1);
 
       rowNames = (String[]) append(rowNames, rowName); 
+      
       data = (float[][]) append(data,data1); 
 
      

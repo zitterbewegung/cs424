@@ -154,7 +154,7 @@ void setup() {
   //Begin 
   //data = new FloatTable("milk-tea-coffee.tsv");
 
-  String [] rows = new String[8];
+  String [] rows = {" ", " "} ;
   String [] columnNames = {"1","2","3","4","5","6","7"};
 
   data = new FloatTable(rows,  columnNames);
@@ -167,16 +167,17 @@ void setup() {
     TempReading element = (TempReading) dataSet.readingsByDate.get(i);
     int id = Integer.decode(element.id);
     tempFloat[id] = new Float(element.Temperature);
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy hh:mm");
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMddyyyyHHmm");
     data.addRow(simpleDateFormat.format(element.ReadingDate), tempFloat);
   }
   rowCount = data.getRowCount();
   columnCount = data.getColumnCount();
 
-  years = int(data.getRowNames());
+  years = int (data.getRowNames());
   yearMin = years[0];
+  println(yearMin);
   yearMax = years[years.length - 1];
-
+  println(yearMax);
   dataMin = 0;
   dataMax = ceil(data.getTableMax() / volumeInterval) * volumeInterval;
 
