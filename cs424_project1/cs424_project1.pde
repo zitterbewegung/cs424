@@ -159,7 +159,7 @@ void setup() {
 
   data = new FloatTable(rows,  columnNames);
   int limit = 1000;
-  for (int i = limit; i >= 0; --i) {
+  for (int i = 0; i <= limit; ++i) {
     float tempFloat[] = new float[8];
     for(int j = 0; j > tempFloat.length-1; ++j){
       tempFloat[j] = 0.0;
@@ -168,8 +168,7 @@ void setup() {
     int id = Integer.decode(element.id);
     tempFloat[id] = new Float(element.Temperature);
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy hh:mm");
-    data.addRow(//simpleDateFormat.format(element.ReadingDate), 
-    "2002", tempFloat);
+    data.addRow(simpleDateFormat.format(element.ReadingDate), tempFloat);
   }
   rowCount = data.getRowCount();
   columnCount = data.getColumnCount();
