@@ -96,13 +96,6 @@ boolean convertFlag = false;
  *  Equations that are to be plot must be encapsulated into a 
  *  class implementing the IGraph2DCallback interface.
  **/
-public class eq implements ILine2DEquation{
-  public double computePoint(double x,int pos) {
-    TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
-    println(temp.Temperature);
-    return temp.Temperature;
-  }		
-}
 
 
 public class eq2 implements ILine2DEquation{
@@ -126,37 +119,138 @@ public class eq2 implements ILine2DEquation{
     }
   }		
 }
-
-
+public class eq3 implements ILine2DEquation{
+  public double computePoint(double x,int pos) {
+    TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
+    println(convert(temp.Temperature));
+    
+    if(temp.id.compareTo( "2") == 0 && convertFlag){
+      prevTemp = temp.Temperature;
+      return temp.Temperature;
+    }
+    else if(temp.id.compareTo( "2") == 0 && !convertFlag)
+    {
+      prevTemp = temp.Temperature;
+      return convert(temp.Temperature);
+    }
+    
+    
+    else{
+      return convert(prevTemp);
+    }
+  }		
+}
+public class eq4 implements ILine2DEquation{
+  public double computePoint(double x,int pos) {
+    TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
+    println(convert(temp.Temperature));
+    
+    if(temp.id.compareTo( "3") == 0 && convertFlag){
+      prevTemp = temp.Temperature;
+      return temp.Temperature;
+    }
+    else if(temp.id.compareTo( "3") == 0 && !convertFlag)
+    {
+      prevTemp = temp.Temperature;
+      return convert(temp.Temperature);
+    }
+    
+    
+    else{
+      return convert(prevTemp);
+    }
+  }		
+}
+public class eq5 implements ILine2DEquation{
+  public double computePoint(double x,int pos) {
+    TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
+    println(convert(temp.Temperature));
+    
+    if(temp.id.compareTo( "4") == 0 && convertFlag){
+      prevTemp = temp.Temperature;
+      return temp.Temperature;
+    }
+    else if(temp.id.compareTo( "4 ") == 0 && !convertFlag)
+    {
+      prevTemp = temp.Temperature;
+      return convert(temp.Temperature);
+    }
+    
+    
+    else{
+      return convert(prevTemp);
+    }
+  }		
+}
+public class eq6 implements ILine2DEquation{
+  public double computePoint(double x,int pos) {
+    TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
+    println(convert(temp.Temperature));
+    
+    if(temp.id.compareTo( "5") == 0 && convertFlag){
+      prevTemp = temp.Temperature;
+      return temp.Temperature;
+    }
+    else if(temp.id.compareTo( "5") == 0 && !convertFlag)
+    {
+      prevTemp = temp.Temperature;
+      return convert(temp.Temperature);
+    }
+    
+    
+    else{
+      return convert(prevTemp);
+    }
+  }		
+}
+public class eq7 implements ILine2DEquation{
+  public double computePoint(double x,int pos) {
+    TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
+    println(convert(temp.Temperature));
+    
+    if(temp.id.compareTo( "6") == 0 && convertFlag){
+      prevTemp = temp.Temperature;
+      return temp.Temperature;
+    }
+    else if(temp.id.compareTo( "6") == 0 && !convertFlag)
+    {
+      prevTemp = temp.Temperature;
+      return convert(temp.Temperature);
+    }
+    
+    
+    else{
+      return convert(prevTemp);
+    }
+  }		
+}
+public class eq8 implements ILine2DEquation{
+  public double computePoint(double x,int pos) {
+    TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
+    println(convert(temp.Temperature));
+    
+    if(temp.id.compareTo( "7") == 0 && convertFlag){
+      prevTemp = temp.Temperature;
+      return temp.Temperature;
+    }
+    else if(temp.id.compareTo( "7") == 0 && !convertFlag)
+    {
+      prevTemp = temp.Temperature;
+      return convert(temp.Temperature);
+    }
+    
+    
+    else{
+      return convert(prevTemp);
+    }
+  }		
+}
 public double convert(double x){
   return (x - 32.0) * (5.0/9.0);
 }
 //85,65 292, 188
 
-//Begin code from step_17_interpolate
-//FloatTable data;
-//float dataMin, dataMax;
-//
-//float plotX1, plotY1;
-//float plotX2, plotY2;
-//float labelX, labelY;
-//
-//int rowCount;
-//int columnCount;
-//int currentColumn = 0;
-//
-//int yearMin, yearMax;
-//int[] years;
-//
-//int yearInterval = 10;
-//int volumeInterval = 10;
-//int volumeIntervalMinor = 5;
-//
-//float[] tabLeft, tabRight;
-//float tabTop, tabBottom;
-//float tabPad = 10;
-//
-//Integrator[] interpolators;
+
 
 PFont plotFont;
 
@@ -209,16 +303,24 @@ void setup() {
   }
    // Creating the Graph2D object:
   // arguments are the parent object, xsize, ysize, cross axes at zero point
-  g = new Graph2D(this, 400, 200, false); 
+  g = new Graph2D(this, 600, 200, false); 
   
   // Defining the main properties of the X and Y-Axis
-  g.setYAxisMin(0);
-  g.setYAxisMax(100);
-  g.setXAxisMin(50);
-  g.setXAxisMax(200);
+  if(!convertFlag)
+  {
+    g.setYAxisMin(10);
+    g.setYAxisMax(40);
+  }
+  else
+  {
+    g.setYAxisMin(50);
+    g.setYAxisMax(100);
+  }
+  g.setXAxisMin(0);
+  g.setXAxisMax(1000);
   g.setXAxisLabel("X-Axis");
   g.setYAxisLabel("Y-Axis");
-  g.setXAxisTickSpacing(10);
+  g.setXAxisTickSpacing(100);
   g.setYAxisTickSpacing(10);
   
   // Offset of the top left corner of the plotting area
@@ -227,62 +329,25 @@ void setup() {
   g.position.x = 200;
   g.position.y = 200;
  
+
   // Here we create a new trace and set a colour for
   // it, along with passing the equation object to it.
   Line2DTrace trace = new Line2DTrace(new eq2());
   trace.setTraceColour(255,0,0);
+  Line2DTrace trace2 = new Line2DTrace(new eq3());
+    trace.setTraceColour(128,0,0);
+      Line2DTrace trace = new Line2DTrace(new eq4());
+  trace.setTraceColour(255,0,0);
+  Line2DTrace trace2 = new Line2DTrace(new eq5());
+    trace.setTraceColour(128,0,0);
+      Line2DTrace trace = new Line2DTrace(new eq6());
+  trace.setTraceColour(255,0,0);
+  Line2DTrace trace2 = new Line2DTrace(new eq7());
+    trace.setTraceColour(128,0,0);
   // Adding the trace to the graph
   g.addTrace(trace);
- // println( converter.getData().toString());
- // println(dataSet.readingsByDate.size());
-  //Begin 
-  //data = new FloatTable("milk-tea-coffee.tsv");
-//
-//  String [] rows = {" ", " "} ;
-//  String [] columnNames = {"1","2","3","4","5","6","7"};
-//
-//  data = new FloatTable(rows,  columnNames);
-//  int limit = 1000;
-//  for (int i = 0; i <= limit; ++i) {
-//    float tempFloat[] = new float[8];
-//    for(int j = 0; j > tempFloat.length-1; ++j){
-//      tempFloat[j] = 0.0;
-//    }
-//    TempReading element = (TempReading) dataSet.readingsByDate.get(i);
-//    int id = Integer.decode(element.id);
-//    tempFloat[id] = new Float(element.Temperature);
-//    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMddyyyyHHmm");
-//    data.addRow(simpleDateFormat.format(element.ReadingDate), tempFloat);
-//  }
-//  rowCount = data.getRowCount();
-//  columnCount = data.getColumnCount();
-//
-//  years = int (data.getRowNames());
-//  yearMin = years[0];
-//  println(yearMin);
-//  yearMax = years[years.length - 1];
-//  println(yearMax);
-//  dataMin = 0;
-//  dataMax = ceil(data.getTableMax() / volumeInterval) * volumeInterval;
-//
-//  interpolators = new Integrator[rowCount];
-//  for (int row = 0; row < rowCount; row++) {
-//    float initialValue = data.getFloat(row, 0);
-//    interpolators[row] = new Integrator(initialValue);
-//    interpolators[row].attraction = 0.1;  // Set lower than the default
-//  }
-//
-//  plotX1 = 60; 
-//  plotX2 = (width - 80)  ;
-//  labelX = 25;
-//  plotY1 = 30;
-//  plotY2 = (height - 70)  ;
-//  labelY = (height - 25)  ;
-//
-//  plotFont = createFont("SansSerif", 20);
-//  textFont(plotFont);
-//
-//  smooth();
+  g.addTrace(trace2);
+
 }
 void paint(java.awt.Graphics g) {
   if (layers != null) {
@@ -308,168 +373,22 @@ void draw() {
   background(224);
    g.draw();
 
-//  // Show the plot area as a white box  
-//  fill(255);
-//  rectMode(CORNERS);
-//  noStroke();
-//  rect(plotX1, plotY1, plotX2, plotY2);
-//
-//  drawTitleTabs();
-//  drawAxisLabels();
-//
-//  for (int row = 0; row < rowCount; row++) {
-//    interpolators[row].update();
-//  }
-//
-//  drawYearLabels();
-//  drawVolumeLabels();
-//
-//  noStroke();
-//  fill(#5679C1);
-//  drawDataArea(currentColumn);
   layers.addLayer(new RoomLayer(this, 300, 300));
+}
+void controlEvent(ControlEvent theEvent) {
+  if(theEvent.group().arrayValue() != null){
+    for(int i=0;i<theEvent.group().arrayValue().length;i++) {
+      int n = (int)theEvent.group().arrayValue()[i];
+      print(n);
+      if(n==10) {
+        convertFlag = false; 
+      }
+      if(n==01) {
+        convertFlag = true; 
+      }
+    }
+  }
 }
 
 
-//void drawTitleTabs() {
-//  rectMode(CORNERS);
-//  noStroke();
-//  textSize(20);
-//  textAlign(LEFT);
-//
-//  // On first use of this method, allocate space for an array
-//  // to store the values for the left and right edges of the tabs
-//  if (tabLeft == null) {
-//    tabLeft = new float[columnCount];
-//    tabRight = new float[columnCount];
-//  }
-//
-//  float runningX = plotX1; 
-//  tabTop = plotY1 - textAscent() - 15;
-//  tabBottom = plotY1;
-//
-//  for (int col = 0; col < columnCount; col++) {
-//    String title = data.getColumnName(col);
-//    tabLeft[col] = runningX; 
-//    float titleWidth = textWidth(title);
-//    tabRight[col] = tabLeft[col] + tabPad + titleWidth + tabPad;
-//
-//    // If the current tab, set its background white, otherwise use pale gray
-//    fill(col == currentColumn ? 255 : 224);
-//    rect(tabLeft[col], tabTop, tabRight[col], tabBottom);
-//
-//    // If the current tab, use black for the text, otherwise use dark gray
-//    fill(col == currentColumn ? 0 : 64);
-//    text(title, runningX + tabPad, plotY1 - 10);
-//
-//    runningX = tabRight[col];
-//  }
-//}
-//
-//
-//void mousePressed() {
-//  if (mouseY > tabTop && mouseY < tabBottom) {
-//    for (int col = 0; col < columnCount; col++) {
-//      if (mouseX > tabLeft[col] && mouseX < tabRight[col]) {
-//        setCurrent(col);
-//      }
-//    }
-//  }
-//}
-//
-//
-//void setCurrent(int col) {
-//  currentColumn = col;
-//
-//  for (int row = 0; row < rowCount; row++) {
-//    interpolators[row].target(data.getFloat(row, col));
-//  }
-//}
-//
-//
-//void drawAxisLabels() {
-//  fill(0);
-//  textSize(13);
-//  textLeading(15);
-//
-//  textAlign(CENTER, CENTER);
-//  text("Gallons\nconsumed\nper capita", labelX, (plotY1+plotY2)/2);
-//  textAlign(CENTER);
-//  text("Date", (plotX1+plotX2)/2, labelY);
-//}
-//
-//
-//void drawYearLabels() {
-//  fill(0);
-//  textSize(10);
-//  textAlign(CENTER);
-//
-//  // Use thin, gray lines to draw the grid
-//  stroke(224);
-//  strokeWeight(1);
-//
-//  for (int row = 0; row < rowCount; row++) {
-//    if (years[row] % yearInterval == 0) {
-//      float x = map(years[row], yearMin, yearMax, plotX1, plotX2);
-//      text(years[row], x, plotY2 + textAscent() + 10);
-//      line(x, plotY1, x, plotY2);
-//    }
-//  }
-//}
-//
-//
-//void drawVolumeLabels() {
-//  fill(0);
-//  textSize(10);
-//  textAlign(RIGHT);
-//
-//  stroke(128);
-//  strokeWeight(1);
-//
-//  for (float v = dataMin; v <= dataMax; v += volumeIntervalMinor) {
-//    if (v % volumeIntervalMinor == 0) {     // If a tick mark
-//      float y = map(v, dataMin, dataMax, plotY2, plotY1);  
-//      if (v % volumeInterval == 0) {        // If a major tick mark
-//        float textOffset = textAscent()/2;  // Center vertically
-//        if (v == dataMin) {
-//          textOffset = 0;                   // Align by the bottom
-//        } 
-//        else if (v == dataMax) {
-//          textOffset = textAscent();        // Align by the top
-//        }
-//        text(floor(v), plotX1 - 10, y + textOffset);
-//        line(plotX1 - 4, y, plotX1, y);     // Draw major tick
-//      } 
-//      else {
-//        //line(plotX1 - 2, y, plotX1, y);   // Draw minor tick
-//      }
-//    }
-//  }
-//}
-//
-//
-//void drawDataArea(int col) {
-//  beginShape();
-//  for (int row = 0; row < rowCount; row++) {
-//    if (data.isValid(row, col)) {
-//      float value = interpolators[row].value;
-//      float x = map(years[row], yearMin, yearMax, plotX1, plotX2);
-//      float y = map(value, dataMin, dataMax, plotY2, plotY1);
-//      vertex(x, y);
-//    }
-//  }
-//  vertex(plotX2, plotY2);
-//  vertex(plotX1, plotY2);
-//  endShape(CLOSE);
-//}
-//void controlEvent(ControlEvent theEvent) {
-//  print("got an event from "+theEvent.group().name()+"\t");
-//  for (int i=0;i<theEvent.group().arrayValue().length;i++) {
-//    print(int(theEvent.group().arrayValue()[i]));
-//  }
-//  println("\t "+theEvent.group().value());
-//  myColorBackground = color(int(theEvent.group().value()*50), 0, 0);
-//}
-//
-//
 
