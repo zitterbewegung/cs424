@@ -3,7 +3,7 @@ public class DataSet
 {
   public ArrayList readingsByDate;
   public Hashtable readingsByHash;
-  DataSet() {
+  public DataSet() {
     readingsByDate = new ArrayList();
     readingsByHash = new Hashtable();
   }

@@ -1,4 +1,3 @@
-
 /*
 * Project 1 due 3 weeks from yesterday.
  This must be an interactive application that shows the data.
@@ -92,14 +91,14 @@ import controlP5.*;
 
 Graph2D g;
 double prevTemp = 0.0;
-boolean convertFlag = false;
+public boolean convertFlag = true;
 PFont plotFont;
-ControlP5 controlP5;
+public ControlP5 controlP5;
 convert converter = new convert();
 public DataSet dataSet = new DataSet();
 float y;
-RadioButton r;
-PImage b;
+public RadioButton r;
+public PImage b;
 AppletLayers layers;
 /**
  *  Equations that are to be plot must be encapsulated into a 
@@ -121,8 +120,9 @@ public class eq2 implements ILine2DEquation {
       prevTemp = temp.Temperature;
       return convert(temp.Temperature);
     }
-
-
+    else if (convertFlag) {
+      return prevTemp;
+    }
     else {
       return convert(prevTemp);
     }
@@ -144,6 +144,9 @@ public class eq3 implements ILine2DEquation {
     }
 
 
+    else if (convertFlag) {
+      return prevTemp;
+    }
     else {
       return convert(prevTemp);
     }
@@ -165,6 +168,9 @@ public class eq4 implements ILine2DEquation {
     }
 
 
+    else if (convertFlag) {
+      return prevTemp;
+    }
     else {
       return convert(prevTemp);
     }
@@ -186,8 +192,11 @@ public class eq5 implements ILine2DEquation {
     }
 
 
+    else if (convertFlag) {
+      return prevTemp;
+    }
     else {
-      return convert(prevTemp);
+      return  convert(prevTemp);
     }
   }
 }
@@ -207,6 +216,9 @@ public class eq6 implements ILine2DEquation {
     }
 
 
+    else if (convertFlag) {
+      return prevTemp;
+    }
     else {
       return convert(prevTemp);
     }
@@ -228,6 +240,9 @@ public class eq7 implements ILine2DEquation {
     }
 
 
+    else if (convertFlag) {
+      return prevTemp;
+    }
     else {
       return convert(prevTemp);
     }
@@ -249,6 +264,9 @@ public class eq8 implements ILine2DEquation {
     }
 
 
+    else if (convertFlag) {
+      return prevTemp;
+    }
     else {
       return convert(prevTemp);
     }
@@ -265,8 +283,8 @@ void setup() {
   //timeline = new Timeline(this);
   frameRate(30);
   //From control p5 examples
-  noStroke();
-
+  //noStroke();
+  smooth();
   // Images must be in the "data" directory to load correctly
 
   controlP5 = new ControlP5(this);
@@ -279,6 +297,7 @@ void setup() {
   r.setSpacingColumn(50);
   addToRadioButton(r, "F", 1);
   addToRadioButton(r, "C", 2);
+  controlP5.addButton("Advance", 0, 700, 700, 80, 19);
 
   converter.process();
   TempReading tempReading;
@@ -311,10 +330,10 @@ void setup() {
     g.setYAxisMax(100);
   }
   g.setXAxisMin(0);
-  g.setXAxisMax(1000);
-  g.setXAxisLabel("Temperature");
-  g.setYAxisLabel("Years");
-  g.setXAxisTickSpacing(100);
+  g.setXAxisMax(100);
+  g.setXAxisLabel("Years");
+  g.setYAxisLabel("Temperature");
+  g.setXAxisTickSpacing(10);
   g.setYAxisTickSpacing(10);
 
   // Offset of the top left corner of the plotting area
@@ -328,6 +347,7 @@ void setup() {
   // it, along with passing the equation object to it.
   Line2DTrace trace = new Line2DTrace(new eq2());
   trace.setTraceColour(255, 159, 0);
+
   Line2DTrace trace2 = new Line2DTrace(new eq3());
   trace2.setTraceColour(86, 180, 233);
   Line2DTrace trace3 = new Line2DTrace(new eq4());
@@ -348,7 +368,7 @@ void setup() {
   g.addTrace(trace5);
   g.addTrace(trace6);
   g.addTrace(trace7);
-  frame.addMouseWheelListener(new MouseWheelInput());  
+  frame.addMouseWheelListener(new MouseWheelInput());
 }
 void paint(java.awt.Graphics g) {
   if (layers != null) {
@@ -358,9 +378,9 @@ void paint(java.awt.Graphics g) {
     super.paint(g);
   }
 }
-void addToRadioButton(RadioButton theRadioButton, String theName, int theValue ) {
+public void addToRadioButton(RadioButton theRadioButton, String theName, int theValue ) {
   //From Control p5 examples
-  Toggle t = theRadioButton.addItem(theName, theValue);
+  final Toggle t = theRadioButton.addItem(theName, theValue);
   t.captionLabel().setColorBackground(color(80));
   t.captionLabel().style().movePadding(2, 0, -1, 2);
   t.captionLabel().style().moveMargin(-2, 0, 0, -3);
@@ -372,18 +392,16 @@ void draw() {
 
   //You have a mouse pressed function keypressed function etc...
   background(255);
-  
+
   g.draw();
+
   layers.addLayer(new RoomLayer(this, 0, 0));
-  
-  
-  
 }
-void controlEvent(ControlEvent theEvent) {
+public void controlEvent(ControlEvent theEvent) {
   if (theEvent.group().arrayValue() != null) {
     for (int i=0;i<theEvent.group().arrayValue().length;i++) {
       int n = (int)theEvent.group().arrayValue()[i];
-      print(n);
+
       if (n==10) {
         convertFlag = false;
       }
