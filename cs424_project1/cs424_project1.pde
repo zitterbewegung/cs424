@@ -1,17 +1,3 @@
-import org.gwoptics.graphics.graph3D.*;
-import org.gwoptics.graphics.colourmap.*;
-import org.gwoptics.graphics.graph2D.backgrounds.*;
-import org.gwoptics.graphics.graph2D.traces.*;
-import org.gwoptics.graphics.camera.*;
-import org.gwoptics.graphics.graph2D.effects.*;
-import org.gwoptics.graphics.graph2D.*;
-import org.gwoptics.*;
-import org.gwoptics.gaussbeams.*;
-import org.gwoptics.graphicsutils.*;
-import org.gwoptics.mathutils.*;
-import org.gwoptics.graphics.*;
-import org.gwoptics.graphics.colourmap.presets.*;
-
 
 /*
 * Project 1 due 3 weeks from yesterday.
@@ -85,186 +71,195 @@ import org.gwoptics.graphics.colourmap.presets.*;
  *Spend time showing your app :PRESENTATION:
  *Put website on multiple places (thumbdrive) :PRESENTATION:
  */
+import org.gwoptics.graphics.graph3D.*;
+import org.gwoptics.graphics.colourmap.*;
+import org.gwoptics.graphics.graph2D.backgrounds.*;
+import org.gwoptics.graphics.graph2D.traces.*;
+import org.gwoptics.graphics.camera.*;
+import org.gwoptics.graphics.graph2D.effects.*;
+import org.gwoptics.graphics.graph2D.*;
+import org.gwoptics.*;
+import org.gwoptics.gaussbeams.*;
+import org.gwoptics.graphicsutils.*;
+import org.gwoptics.mathutils.*;
+import org.gwoptics.graphics.*;
+import org.gwoptics.graphics.colourmap.presets.*;
+// must import java.awt.event.*
+import java.awt.event.*;
 import com.nootropic.processing.layers.*;
-
 import java.text.SimpleDateFormat;
 import controlP5.*;
+
 Graph2D g;
 double prevTemp = 0.0;
 boolean convertFlag = false;
+PFont plotFont;
+ControlP5 controlP5;
+convert converter = new convert();
+public DataSet dataSet = new DataSet();
+float y;
+RadioButton r;
+PImage b;
+AppletLayers layers;
 /**
  *  Equations that are to be plot must be encapsulated into a 
  *  class implementing the IGraph2DCallback interface.
  **/
 
 
-public class eq2 implements ILine2DEquation{
-  public double computePoint(double x,int pos) {
+public class eq2 implements ILine2DEquation {
+  public double computePoint(double x, int pos) {
     TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
     println(convert(temp.Temperature));
-    
-    if(temp.id.compareTo( "1") == 0 && convertFlag){
+
+    if (temp.id.compareTo( "1") == 0 && convertFlag) {
       prevTemp = temp.Temperature;
       return temp.Temperature;
     }
-    else if(temp.id.compareTo( "1") == 0 && !convertFlag)
+    else if (temp.id.compareTo( "1") == 0 && !convertFlag)
     {
       prevTemp = temp.Temperature;
       return convert(temp.Temperature);
     }
-    
-    
-    else{
+
+
+    else {
       return convert(prevTemp);
     }
-  }		
+  }
 }
-public class eq3 implements ILine2DEquation{
-  public double computePoint(double x,int pos) {
+public class eq3 implements ILine2DEquation {
+  public double computePoint(double x, int pos) {
     TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
     println(convert(temp.Temperature));
-    
-    if(temp.id.compareTo( "2") == 0 && convertFlag){
+
+    if (temp.id.compareTo( "2") == 0 && convertFlag) {
       prevTemp = temp.Temperature;
       return temp.Temperature;
     }
-    else if(temp.id.compareTo( "2") == 0 && !convertFlag)
+    else if (temp.id.compareTo( "2") == 0 && !convertFlag)
     {
       prevTemp = temp.Temperature;
       return convert(temp.Temperature);
     }
-    
-    
-    else{
+
+
+    else {
       return convert(prevTemp);
     }
-  }		
+  }
 }
-public class eq4 implements ILine2DEquation{
-  public double computePoint(double x,int pos) {
+public class eq4 implements ILine2DEquation {
+  public double computePoint(double x, int pos) {
     TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
     println(convert(temp.Temperature));
-    
-    if(temp.id.compareTo( "3") == 0 && convertFlag){
+
+    if (temp.id.compareTo( "3") == 0 && convertFlag) {
       prevTemp = temp.Temperature;
       return temp.Temperature;
     }
-    else if(temp.id.compareTo( "3") == 0 && !convertFlag)
+    else if (temp.id.compareTo( "3") == 0 && !convertFlag)
     {
       prevTemp = temp.Temperature;
       return convert(temp.Temperature);
     }
-    
-    
-    else{
+
+
+    else {
       return convert(prevTemp);
     }
-  }		
+  }
 }
-public class eq5 implements ILine2DEquation{
-  public double computePoint(double x,int pos) {
+public class eq5 implements ILine2DEquation {
+  public double computePoint(double x, int pos) {
     TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
     println(convert(temp.Temperature));
-    
-    if(temp.id.compareTo( "4") == 0 && convertFlag){
+
+    if (temp.id.compareTo( "4") == 0 && convertFlag) {
       prevTemp = temp.Temperature;
       return temp.Temperature;
     }
-    else if(temp.id.compareTo( "4 ") == 0 && !convertFlag)
+    else if (temp.id.compareTo( "4 ") == 0 && !convertFlag)
     {
       prevTemp = temp.Temperature;
       return convert(temp.Temperature);
     }
-    
-    
-    else{
+
+
+    else {
       return convert(prevTemp);
     }
-  }		
+  }
 }
-public class eq6 implements ILine2DEquation{
-  public double computePoint(double x,int pos) {
+public class eq6 implements ILine2DEquation {
+  public double computePoint(double x, int pos) {
     TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
     println(convert(temp.Temperature));
-    
-    if(temp.id.compareTo( "5") == 0 && convertFlag){
+
+    if (temp.id.compareTo( "5") == 0 && convertFlag) {
       prevTemp = temp.Temperature;
       return temp.Temperature;
     }
-    else if(temp.id.compareTo( "5") == 0 && !convertFlag)
+    else if (temp.id.compareTo( "5") == 0 && !convertFlag)
     {
       prevTemp = temp.Temperature;
       return convert(temp.Temperature);
     }
-    
-    
-    else{
+
+
+    else {
       return convert(prevTemp);
     }
-  }		
+  }
 }
-public class eq7 implements ILine2DEquation{
-  public double computePoint(double x,int pos) {
+public class eq7 implements ILine2DEquation {
+  public double computePoint(double x, int pos) {
     TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
     println(convert(temp.Temperature));
-    
-    if(temp.id.compareTo( "6") == 0 && convertFlag){
+
+    if (temp.id.compareTo( "6") == 0 && convertFlag) {
       prevTemp = temp.Temperature;
       return temp.Temperature;
     }
-    else if(temp.id.compareTo( "6") == 0 && !convertFlag)
+    else if (temp.id.compareTo( "6") == 0 && !convertFlag)
     {
       prevTemp = temp.Temperature;
       return convert(temp.Temperature);
     }
-    
-    
-    else{
+
+
+    else {
       return convert(prevTemp);
     }
-  }		
+  }
 }
-public class eq8 implements ILine2DEquation{
-  public double computePoint(double x,int pos) {
+public class eq8 implements ILine2DEquation {
+  public double computePoint(double x, int pos) {
     TempReading temp = (TempReading) dataSet.readingsByDate.get(pos);
     println(convert(temp.Temperature));
-    
-    if(temp.id.compareTo( "7") == 0 && convertFlag){
+
+    if (temp.id.compareTo( "7") == 0 && convertFlag) {
       prevTemp = temp.Temperature;
       return temp.Temperature;
     }
-    else if(temp.id.compareTo( "7") == 0 && !convertFlag)
+    else if (temp.id.compareTo( "7") == 0 && !convertFlag)
     {
       prevTemp = temp.Temperature;
       return convert(temp.Temperature);
     }
-    
-    
-    else{
+
+
+    else {
       return convert(prevTemp);
     }
-  }		
+  }
 }
-public double convert(double x){
+//This method converts a input into celcius.
+public double convert(double x) {
   return (x - 32.0) * (5.0/9.0);
 }
 //85,65 292, 188
 
-
-
-PFont plotFont;
-
-ControlP5 controlP5;
-convert converter = new convert();
-public DataSet dataSet = new DataSet();
-
-
-
-int myColorBackground = color(0, 0, 0);
-
-RadioButton r;
-PImage b;
-AppletLayers layers;
 void setup() {
   size(1024, 768);
   //timeline = new Timeline(this);
@@ -289,24 +284,23 @@ void setup() {
   TempReading tempReading;
   String idTemp = "";
   Date ReadingDateTemp = new Date();
-  SimpleDateFormat formatter = new SimpleDateFormat(
-  "MMM/dd/yyyy HH:mm aa");
+  SimpleDateFormat formatter = new SimpleDateFormat("MMM/dd/yyyy HH:mm aa");
   //converter.data.size()
   for (int counter = 0; counter < converter.data.size(); counter++) {
     String[] temp = converter.data.get(counter);
     try {
-      dataSet.readingsByDate.add( new TempReading( temp[1], formatter.parse(temp[0]), Double.parseDouble(temp[2])));
+      dataSet.readingsByDate.add( new TempReading(temp[1], formatter.parse(temp[0]), Double.parseDouble(temp[2])));
     }
     catch (Exception e) {
       e.printStackTrace();
     }
   }
-   // Creating the Graph2D object:
+  // Creating the Graph2D object:
   // arguments are the parent object, xsize, ysize, cross axes at zero point
-  g = new Graph2D(this, 600, 200, false); 
-  
+  g = new Graph2D(this, 600, 400, false); 
+
   // Defining the main properties of the X and Y-Axis
-  if(!convertFlag)
+  if (!convertFlag)
   {
     g.setYAxisMin(10);
     g.setYAxisMax(40);
@@ -322,30 +316,30 @@ void setup() {
   g.setYAxisLabel("Years");
   g.setXAxisTickSpacing(100);
   g.setYAxisTickSpacing(10);
-  
+
   // Offset of the top left corner of the plotting area
   // to the sketch origin (should not be zero in order to
   // see the y-axis label
   g.position.x = 200;
   g.position.y = 200;
- 
+
 
   // Here we create a new trace and set a colour for
   // it, along with passing the equation object to it.
   Line2DTrace trace = new Line2DTrace(new eq2());
-  trace.setTraceColour(255,159,0);
+  trace.setTraceColour(255, 159, 0);
   Line2DTrace trace2 = new Line2DTrace(new eq3());
-    trace2.setTraceColour(86,180,233);
-      Line2DTrace trace3 = new Line2DTrace(new eq4());
-  trace3.setTraceColour(0,0,0);
+  trace2.setTraceColour(86, 180, 233);
+  Line2DTrace trace3 = new Line2DTrace(new eq4());
+  trace3.setTraceColour(0, 0, 0);
   Line2DTrace trace4 = new Line2DTrace(new eq5());
-    trace4.setTraceColour(0,158,115);
-      Line2DTrace trace5 = new Line2DTrace(new eq6());
-  trace5.setTraceColour(240,228,66);
+  trace4.setTraceColour(0, 158, 115);
+  Line2DTrace trace5 = new Line2DTrace(new eq6());
+  trace5.setTraceColour(240, 228, 66);
   Line2DTrace trace6 = new Line2DTrace(new eq7());
-    trace6.setTraceColour(0,114,178);
-      Line2DTrace trace7 = new Line2DTrace(new eq8());
-    trace7.setTraceColour(213,94,0);
+  trace6.setTraceColour(0, 114, 178);
+  Line2DTrace trace7 = new Line2DTrace(new eq8());
+  trace7.setTraceColour(213, 94, 0);
   // Adding the trace to the graph
   g.addTrace(trace);
   g.addTrace(trace2);
@@ -354,7 +348,7 @@ void setup() {
   g.addTrace(trace5);
   g.addTrace(trace6);
   g.addTrace(trace7);
-
+  frame.addMouseWheelListener(new MouseWheelInput());  
 }
 void paint(java.awt.Graphics g) {
   if (layers != null) {
@@ -378,24 +372,35 @@ void draw() {
 
   //You have a mouse pressed function keypressed function etc...
   background(255);
-   g.draw();
-
-  layers.addLayer(new RoomLayer(this, 300, 300));
+  
+  g.draw();
+  layers.addLayer(new RoomLayer(this, 0, 0));
+  
+  
+  
 }
 void controlEvent(ControlEvent theEvent) {
-  if(theEvent.group().arrayValue() != null){
-    for(int i=0;i<theEvent.group().arrayValue().length;i++) {
+  if (theEvent.group().arrayValue() != null) {
+    for (int i=0;i<theEvent.group().arrayValue().length;i++) {
       int n = (int)theEvent.group().arrayValue()[i];
       print(n);
-      if(n==10) {
-        convertFlag = false; 
+      if (n==10) {
+        convertFlag = false;
       }
-      if(n==01) {
-        convertFlag = true; 
+      if (n==01) {
+        convertFlag = true;
       }
     }
   }
 }
+// convenience class to listen for MouseWheelEvent
+// modify mouseWheelMoved() for your own purposes see http://workshop.evolutionzone.com/2007/09/26/code-mousewheelpde/
 
+class MouseWheelInput implements MouseWheelListener {
 
+  void mouseWheelMoved(MouseWheelEvent e) {
+    int step=e.getWheelRotation();
+    y=y+step*5;
+  }
+}
 
