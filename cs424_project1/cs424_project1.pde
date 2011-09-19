@@ -277,7 +277,7 @@ void setup() {
   controlP5 = new ControlP5(this);
   layers = new AppletLayers(this);
   r = controlP5.addRadioButton("radioButton", 20, 300);
-  r.setColorForeground(color(120));
+  r.setColorForeground(color(0));
   r.setColorActive(color(255));
   r.setColorLabel(color(255));
   r.setItemsPerRow(5);
@@ -333,20 +333,27 @@ void setup() {
   // Here we create a new trace and set a colour for
   // it, along with passing the equation object to it.
   Line2DTrace trace = new Line2DTrace(new eq2());
-  trace.setTraceColour(255,0,0);
+  trace.setTraceColour(255,159,0);
   Line2DTrace trace2 = new Line2DTrace(new eq3());
-    trace.setTraceColour(128,0,0);
-      Line2DTrace trace = new Line2DTrace(new eq4());
-  trace.setTraceColour(255,0,0);
-  Line2DTrace trace2 = new Line2DTrace(new eq5());
-    trace.setTraceColour(128,0,0);
-      Line2DTrace trace = new Line2DTrace(new eq6());
-  trace.setTraceColour(255,0,0);
-  Line2DTrace trace2 = new Line2DTrace(new eq7());
-    trace.setTraceColour(128,0,0);
+    trace2.setTraceColour(86,180,233);
+      Line2DTrace trace3 = new Line2DTrace(new eq4());
+  trace3.setTraceColour(0,0,0);
+  Line2DTrace trace4 = new Line2DTrace(new eq5());
+    trace4.setTraceColour(0,158,115);
+      Line2DTrace trace5 = new Line2DTrace(new eq6());
+  trace5.setTraceColour(240,228,66);
+  Line2DTrace trace6 = new Line2DTrace(new eq7());
+    trace6.setTraceColour(0,114,178);
+      Line2DTrace trace7 = new Line2DTrace(new eq8());
+    trace7.setTraceColour(213,94,0);
   // Adding the trace to the graph
   g.addTrace(trace);
   g.addTrace(trace2);
+  g.addTrace(trace3);
+  g.addTrace(trace4);
+  g.addTrace(trace5);
+  g.addTrace(trace6);
+  g.addTrace(trace7);
 
 }
 void paint(java.awt.Graphics g) {
