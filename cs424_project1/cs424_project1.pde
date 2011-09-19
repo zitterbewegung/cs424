@@ -276,11 +276,11 @@ void setup() {
 
   controlP5 = new ControlP5(this);
   layers = new AppletLayers(this);
-  r = controlP5.addRadioButton("radioButton", 20, 300);
+  r = controlP5.addRadioButton("radioButton", 1000, 600);
   r.setColorForeground(color(0));
   r.setColorActive(color(255));
   r.setColorLabel(color(255));
-  r.setItemsPerRow(5);
+  r.setItemsPerRow(1);
   r.setSpacingColumn(50);
   addToRadioButton(r, "F", 1);
   addToRadioButton(r, "C", 2);
@@ -318,8 +318,8 @@ void setup() {
   }
   g.setXAxisMin(0);
   g.setXAxisMax(1000);
-  g.setXAxisLabel("X-Axis");
-  g.setYAxisLabel("Y-Axis");
+  g.setXAxisLabel("Temperature");
+  g.setYAxisLabel("Years");
   g.setXAxisTickSpacing(100);
   g.setYAxisTickSpacing(10);
   
@@ -377,7 +377,7 @@ void addToRadioButton(RadioButton theRadioButton, String theName, int theValue )
 void draw() {
 
   //You have a mouse pressed function keypressed function etc...
-  background(224);
+  background(255);
    g.draw();
 
   layers.addLayer(new RoomLayer(this, 300, 300));
