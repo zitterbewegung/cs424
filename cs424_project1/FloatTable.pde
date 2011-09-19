@@ -23,10 +23,11 @@ class FloatTable {
       rowNames = (String[]) append(rowNames, rowName); 
       
       data = (float[][]) append(data,data1); 
-
+        
+    }
      
     
-  }
+
 //  
 //  FloatTable(String filename){
 //    String[] rows = loadStrings(filename);
